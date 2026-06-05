@@ -1,0 +1,56 @@
+# ============================================================================
+# Wonder Travel — Apache (.htaccess) per Cloudways Hybrid Stack
+# SPA fallback (React Router) + cache asset + sicurezza.
+# ============================================================================
+
+# --- Fallback SPA: ogni percorso non-file viene servito da index.html ---
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Forza HTTPS (Cloudways gestisce il certificato Let's Encrypt)
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # File o cartelle reali (asset, immagini, lead.php) -> serviti direttamente
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Tutto il resto (/it, /pt-br, /it/grazie, ...) -> index.html
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# --- Protezione file sensibili (log dei lead, env, dotfiles) ---
+<FilesMatch "(\.log|\.env.*|\.git.*|composer\.(json|lock))$">
+  Require all denied
+</FilesMatch>
+
+# --- Compressione ---
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json image/svg+xml
+</IfModule>
+
+# --- Cache: asset con hash = immutabili a lungo; index.html mai in cache ---
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|webp|avif|jpe?g|png|gif|woff2?|svg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # Sicurezza di base
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# --- Fallback MIME per webp/avif (in caso il server non li riconosca) ---
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType image/avif .avif
+</IfModule>
+
+ErrorDocument 404 /index.html
