@@ -1,0 +1,15 @@
+{
+  "name": "Wonder Travel",
+  "short_name": "Wonder Travel",
+  "description": "Pellegrinaggi e viaggi di gruppo a Roma e Assisi, curati in ogni dettaglio dal 1989.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#017f7b",
+  "lang": "it",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/favicon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

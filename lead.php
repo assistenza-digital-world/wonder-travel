@@ -62,6 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     out(405, ['ok' => false, 'error' => 'Method not allowed']);
 }
 
+// Rate-limit anti-abuso: max 5 invii per IP ogni 10 minuti (protegge la casella
+// lead da flood / esaurimento quota SMTP e il DB da bloat). Fail-open su FS.
+require_once __DIR__ . '/ratelimit.php';
+if (!wt_rate_ok('lead_' . wt_client_ip(), 5, 600)) {
+    out(429, ['ok' => false, 'error' => 'Too many requests']);
+}
+
 // Leggi il corpo (max ~64KB per sicurezza)
 $raw = file_get_contents('php://input', false, null, 0, 65536);
 $data = json_decode($raw, true);
@@ -91,6 +98,11 @@ $marketing    = !empty($data['marketing']) ? 'Sì' : 'No';
 $consent      = !empty($data['consent']);
 $privacyVersion = field($data, 'privacyVersion');
 
+// Anti header-injection: i campi che finiscono nelle intestazioni email
+// (Reply-To, Subject) NON devono contenere CR/LF. Il messaggio (textarea) può.
+$name = preg_replace('/[\r\n]+/', ' ', $name);
+$org  = preg_replace('/[\r\n]+/', ' ', $org);
+
 // Validazione minima
 $errors = [];
 if ($name === '')  $errors[] = 'name';
@@ -108,7 +120,7 @@ if ($errors) {
 $attr = isset($data['attribution']) && is_array($data['attribution']) ? $data['attribution'] : [];
 function a($attr, $k) { return isset($attr[$k]) ? trim((string)$attr[$k]) : ''; }
 
-$ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+$ip = wt_client_ip();
 $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
 $submittedAt = field($data, 'submittedAt');
 

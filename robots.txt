@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Endpoint applicativi (solo POST) — non utili in indice
+Disallow: /lead.php
+Disallow: /consent.php
+
+Sitemap: https://wondertravel.it/sitemap.xml

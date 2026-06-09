@@ -1,0 +1,14 @@
+# --- Segreti: MAI versionare ---
+secrets.php
+
+# --- Log con PII dei lead ---
+*.log
+leads.log
+lead-failures.log
+
+# --- Tooling / OS / editor ---
+.claude/
+node_modules/
+.DS_Store
+Thumbs.db
+*.local

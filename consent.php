@@ -11,7 +11,7 @@
  * Endpoint usato dal front-end via VITE_CONSENT_API_URL=/consent.php
  */
 
-$ALLOWED_ORIGIN = '*'; // metti il tuo dominio per limitare
+$ALLOWED_ORIGIN = 'https://wondertravel.it'; // origine consentita (stesso dominio del banner). '*' = qualsiasi.
 
 header('Access-Control-Allow-Origin: ' . $ALLOWED_ORIGIN);
 header('Access-Control-Allow-Methods: POST, OPTIONS');
@@ -33,6 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     out(405, ['ok' => false, 'error' => 'Method not allowed']);
 }
 
+// Rate-limit anti-abuso: max 30 registrazioni consenso per IP ogni 10 minuti.
+require_once __DIR__ . '/ratelimit.php';
+if (!wt_rate_ok('consent_' . wt_client_ip(), 30, 600)) {
+    out(429, ['ok' => false, 'error' => 'Too many requests']);
+}
+
 $raw = file_get_contents('php://input', false, null, 0, 8192);
 $data = json_decode($raw, true);
 if (!is_array($data)) {
@@ -50,7 +56,7 @@ $consentId     = substr(f($data, 'consentId'), 0, 64);
 $categories    = substr(f($data, 'categories'), 0, 190);
 $policyVersion = substr(f($data, 'policyVersion'), 0, 32);
 $locale        = substr(f($data, 'locale'), 0, 5);
-$ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+$ip = wt_client_ip();
 $ua = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 255);
 
 require_once __DIR__ . '/db.php';

@@ -5,35 +5,66 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#017f7b" />
 
     <title>Wonder Travel | Pellegrinaggi a Roma e Assisi</title>
-    <meta
-      name="description"
-      content="Organizza il pellegrinaggio del tuo gruppo a Roma e Assisi con Wonder Travel: Vaticano, Udienza Papale, Basilica di San Francesco ed esperienze autentiche. Risposta in 24h."
-    />
+    <meta name="description" content="Organizza il pellegrinaggio del tuo gruppo a Roma e Assisi con Wonder Travel: Vaticano, Udienza Papale, Basilica di San Francesco ed esperienze autentiche. Risposta in 24h." />
+    <link rel="canonical" href="https://wondertravel.it/it" />
+    <meta name="robots" content="index, follow" />
+    <link rel="alternate" hreflang="it" href="https://wondertravel.it/it" />
+    <link rel="alternate" hreflang="pt-BR" href="https://wondertravel.it/pt-br" />
+    <link rel="alternate" hreflang="x-default" href="https://wondertravel.it/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Wonder Travel" />
     <meta property="og:title" content="Wonder Travel | Pellegrinaggi a Roma e Assisi" />
-    <meta
-      property="og:description"
-      content="Pellegrinaggi e viaggi di gruppo a Roma e Assisi, curati in ogni dettaglio dal 1989. Il tuo gruppo è IL gruppo della settimana."
-    />
-    <meta property="og:image" content="/images/og-image.jpg" />
+    <meta property="og:description" content="Pellegrinaggi e viaggi di gruppo a Roma e Assisi, curati in ogni dettaglio dal 1989. Il tuo gruppo è IL gruppo della settimana." />
+    <meta property="og:url" content="https://wondertravel.it/it" />
+    <meta property="og:image" content="https://wondertravel.it/images/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="it_IT" />
+    <meta property="og:locale:alternate" content="pt_BR" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Wonder Travel | Pellegrinaggi a Roma e Assisi" />
-    <meta
-      name="twitter:description"
-      content="Pellegrinaggi e viaggi di gruppo a Roma e Assisi, curati in ogni dettaglio dal 1989."
-    />
-    <meta name="twitter:image" content="/images/og-image.jpg" />
+    <meta name="twitter:description" content="Pellegrinaggi e viaggi di gruppo a Roma e Assisi, curati in ogni dettaglio dal 1989. Il tuo gruppo è IL gruppo della settimana." />
+    <meta name="twitter:image" content="https://wondertravel.it/images/og-image.jpg" />
+
+    <link rel="modulepreload" href="/assets/index-9244604e.js" />
+    <link rel="preload" as="font" type="font/woff2" href="/assets/cormorant-garamond-latin-700-normal-DajfzrDU.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/assets/inter-latin-400-normal-C38fXH4l.woff2" crossorigin />
+    <script>
+      // Fix navigazione ancore: su mobile il click su una voce del menu hamburger
+      // chiude l'overlay nello stesso tick della navigazione nativa, annullando lo
+      // scroll. Qui scrolliamo programmaticamente (con offset header) dopo la chiusura.
+      (function () {
+        function headerH() {
+          var v = getComputedStyle(document.documentElement).getPropertyValue('--header-h');
+          var n = parseFloat(v);
+          return v.indexOf('rem') > -1 ? n * 16 : (n || 72);
+        }
+        document.addEventListener('click', function (e) {
+          var a = e.target.closest && e.target.closest('a[href^="#"]');
+          if (!a) return;
+          var id = a.getAttribute('href').slice(1);
+          if (!id) return;
+          var el = document.getElementById(id);
+          if (!el) return;
+          setTimeout(function () {
+            var top = el.getBoundingClientRect().top + window.pageYOffset - headerH();
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }, 90);
+        }, true);
+      })();
+    </script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"TravelAgency","name":"Wonder Travel","url":"https://wondertravel.it/it","logo":"https://wondertravel.it/logos/wonder-travel.png","image":"https://wondertravel.it/images/og-image.jpg","description":"Pellegrinaggi e viaggi di gruppo a Roma e Assisi, curati in ogni dettaglio dal 1989. Il tuo gruppo è IL gruppo della settimana.","email":"info@wondertravel.it","telephone":"+39 389 6795665","foundingDate":"1989","areaServed":["IT","BR"],"knowsLanguage":["it","pt-BR"],"sameAs":[]}</script>
     <script type="module" crossorigin src="/assets/index-9244604e.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-CMwa5PbX.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-62b6daf9.css" />
   </head>
   <body>
     <div id="root"></div>
