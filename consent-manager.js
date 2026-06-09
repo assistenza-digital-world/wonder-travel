@@ -1,20 +1,23 @@
 /*!
  * Wonder Travel - Consent Manager (GDPR/LGPD)
- * Banner cookie granulare + Google Consent Mode v2 + caricamento condizionato
- * di Google Analytics 4 e Meta Pixel, registrazione del consenso su DB (/consent.php),
- * revoca tramite pulsante persistente. Vanilla JS, nessuna dipendenza.
+ * Banner cookie granulare + Google Consent Mode v2 + Meta Pixel condizionato al
+ * consenso, registrazione del consenso su DB (/consent.php), revoca tramite
+ * pulsante persistente. Vanilla JS, nessuna dipendenza.
  *
- * CONFIG: inserisci ga4Id (G-XXXX) e metaPixelId quando disponibili. Finché sono
- * vuoti NESSUNO script di tracciamento viene caricato (solo registrazione consenso).
+ * Google Tag Manager (GTM-PN344WK8) è caricato nell'HTML con il Consent Mode
+ * default a 'denied' impostato PRIMA di GTM: GA4 e gli altri tag Google dentro
+ * GTM rispettano il consenso aggiornato qui. Il Meta Pixel è invece caricato
+ * direttamente da questo file solo dopo consenso marketing.
  */
 (function () {
   'use strict';
   var CONFIG = {
     policyVersion: '2026-06-09',     // deve combaciare con cookiePolicyVersion del sito
     consentApiUrl: '/consent.php',
-    ga4Id: '',                       // <-- Measurement ID GA4 (es. "G-XXXXXXX")
-    metaPixelId: '',                 // <-- ID Meta Pixel (es. "123456789012345")
+    metaPixelId: '701555035471162',  // Meta Pixel Wonder Travel (gated dal consenso marketing)
     maxAgeDays: 365                  // ri-chiede il consenso dopo 12 mesi
+    // GA4 e gli altri tag Google sono gestiti da Google Tag Manager (GTM-PN344WK8),
+    // caricato nell'HTML; rispettano il Google Consent Mode aggiornato qui sotto.
   };
 
   var LS_STATE = 'wt_consent_state';   // {v, ts, analytics, marketing, id}
@@ -50,13 +53,10 @@
     }
   }[lang];
 
-  // ---- Google Consent Mode v2: default DENIED prima di tutto ----
+  // dataLayer + gtag helper. Il default 'denied' del Consent Mode è impostato
+  // nell'HTML PRIMA del caricamento di GTM (vedi snippet nello <head>).
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
-  gtag('consent', 'default', {
-    ad_storage: 'denied', analytics_storage: 'denied',
-    ad_user_data: 'denied', ad_personalization: 'denied', wait_for_update: 500
-  });
 
   function uuid() {
     if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
@@ -73,15 +73,7 @@
     return (Date.now() - st.ts) / 86400000 > CONFIG.maxAgeDays;
   }
 
-  var gaLoaded = false, metaLoaded = false;
-  function loadGA() {
-    if (gaLoaded || !CONFIG.ga4Id) return; gaLoaded = true;
-    var s = document.createElement('script'); s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(CONFIG.ga4Id);
-    document.head.appendChild(s);
-    gtag('js', new Date());
-    gtag('config', CONFIG.ga4Id, { anonymize_ip: true });
-  }
+  var metaLoaded = false;
   function loadMeta() {
     if (metaLoaded || !CONFIG.metaPixelId) return; metaLoaded = true;
     /* eslint-disable */
@@ -96,13 +88,14 @@
   }
 
   function applyConsent(st) {
+    // Aggiorna il Google Consent Mode: GTM/GA4 reagiscono di conseguenza.
     gtag('consent', 'update', {
       analytics_storage: st.analytics ? 'granted' : 'denied',
       ad_storage: st.marketing ? 'granted' : 'denied',
       ad_user_data: st.marketing ? 'granted' : 'denied',
       ad_personalization: st.marketing ? 'granted' : 'denied'
     });
-    if (st.analytics) loadGA();
+    // Meta Pixel: caricato direttamente solo con consenso marketing.
     if (st.marketing) loadMeta();
   }
 
