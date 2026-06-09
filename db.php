@@ -88,14 +88,18 @@ function wt_db_ensure_schema($pdo) {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
     );
 
-    // Registro consensi cookie (banner accetta/rifiuta) — auditabile
+    // Registro consensi cookie — append-only, una riga per evento (grant/withdraw/
+    // update) per costituire una prova auditabile del consenso (GDPR art. 7.1).
     $pdo->exec(
         "CREATE TABLE IF NOT EXISTS cookie_consents (
             id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             created_at DATETIME NOT NULL,
             consent_id VARCHAR(64) DEFAULT NULL,
             choice VARCHAR(16) NOT NULL,
+            event VARCHAR(16) DEFAULT NULL,
             categories VARCHAR(190) DEFAULT NULL,
+            analytics_consent TINYINT(1) NOT NULL DEFAULT 0,
+            marketing_consent TINYINT(1) NOT NULL DEFAULT 0,
             policy_version VARCHAR(32) DEFAULT NULL,
             locale VARCHAR(5) DEFAULT NULL,
             ip VARCHAR(45) DEFAULT NULL,
@@ -103,4 +107,14 @@ function wt_db_ensure_schema($pdo) {
             INDEX (created_at), INDEX (consent_id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
     );
+
+    // Migrazione idempotente: aggiunge le colonne granulari a tabelle preesistenti.
+    // Best-effort: gli errori "colonna già esistente" vengono ignorati.
+    foreach ([
+        "ALTER TABLE cookie_consents ADD COLUMN event VARCHAR(16) DEFAULT NULL AFTER choice",
+        "ALTER TABLE cookie_consents ADD COLUMN analytics_consent TINYINT(1) NOT NULL DEFAULT 0 AFTER categories",
+        "ALTER TABLE cookie_consents ADD COLUMN marketing_consent TINYINT(1) NOT NULL DEFAULT 0 AFTER analytics_consent",
+    ] as $__sql) {
+        try { $pdo->exec($__sql); } catch (Throwable $e) { /* colonna già presente */ }
+    }
 }

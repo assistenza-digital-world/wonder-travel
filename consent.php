@@ -48,12 +48,15 @@ if (!is_array($data)) {
 function f($d, $k) { return isset($d[$k]) ? trim((string)$d[$k]) : ''; }
 
 $choice = f($data, 'choice');
-if (!in_array($choice, ['accepted', 'rejected'], true)) {
+if (!in_array($choice, ['accepted', 'rejected', 'custom'], true)) {
     out(422, ['ok' => false, 'error' => 'Invalid choice']);
 }
 
 $consentId     = substr(f($data, 'consentId'), 0, 64);
+$event         = substr(f($data, 'event'), 0, 16);
 $categories    = substr(f($data, 'categories'), 0, 190);
+$analytics     = !empty($data['analytics']) ? 1 : 0;
+$marketing     = !empty($data['marketing']) ? 1 : 0;
 $policyVersion = substr(f($data, 'policyVersion'), 0, 32);
 $locale        = substr(f($data, 'locale'), 0, 5);
 $ip = wt_client_ip();
@@ -69,10 +72,10 @@ if (!$pdo) {
 try {
     $stmt = $pdo->prepare(
         "INSERT INTO cookie_consents
-         (created_at, consent_id, choice, categories, policy_version, locale, ip, user_agent)
-         VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?)"
+         (created_at, consent_id, choice, event, categories, analytics_consent, marketing_consent, policy_version, locale, ip, user_agent)
+         VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     );
-    $stmt->execute([$consentId, $choice, $categories, $policyVersion, $locale, $ip, $ua]);
+    $stmt->execute([$consentId, $choice, $event, $categories, $analytics, $marketing, $policyVersion, $locale, $ip, $ua]);
     out(200, ['ok' => true, 'stored' => true]);
 } catch (Throwable $e) {
     error_log('WT consent insert failed: ' . $e->getMessage());
