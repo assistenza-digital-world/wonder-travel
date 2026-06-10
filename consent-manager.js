@@ -1,23 +1,22 @@
 /*!
  * Wonder Travel - Consent Manager (GDPR/LGPD)
- * Banner cookie granulare + Google Consent Mode v2 + Meta Pixel condizionato al
- * consenso, registrazione del consenso su DB (/consent.php), revoca tramite
- * pulsante persistente. Vanilla JS, nessuna dipendenza.
+ * Banner cookie granulare + Google Consent Mode v2, registrazione del consenso
+ * su DB (/consent.php), revoca tramite pulsante persistente. Vanilla JS.
  *
- * Google Tag Manager (GTM-PN344WK8) è caricato nell'HTML con il Consent Mode
- * default a 'denied' impostato PRIMA di GTM: GA4 e gli altri tag Google dentro
- * GTM rispettano il consenso aggiornato qui. Il Meta Pixel è invece caricato
- * direttamente da questo file solo dopo consenso marketing.
+ * TUTTI i tag (GA4, Meta Pixel, ecc.) vivono in Google Tag Manager (GTM-PN344WK8),
+ * caricato nell'HTML con Consent Mode default 'denied' PRIMA di GTM.
+ * Questo file, a ogni scelta/caricamento, comunica lo stato del consenso a GTM:
+ *   1. gtag('consent','update',...)  -> i tag Google (GA4) si autoregolano;
+ *   2. dataLayer.push({event:'wt_consent_update', consent_analytics, consent_marketing})
+ *      -> attivatore per i tag non-Google (es. Meta Pixel: trigger su questo
+ *         evento con condizione consent_marketing = true).
  */
 (function () {
   'use strict';
   var CONFIG = {
     policyVersion: '2026-06-09',     // deve combaciare con cookiePolicyVersion del sito
     consentApiUrl: '/consent.php',
-    metaPixelId: '701555035471162',  // Meta Pixel Wonder Travel (gated dal consenso marketing)
     maxAgeDays: 365                  // ri-chiede il consenso dopo 12 mesi
-    // GA4 e gli altri tag Google sono gestiti da Google Tag Manager (GTM-PN344WK8),
-    // caricato nell'HTML; rispettano il Google Consent Mode aggiornato qui sotto.
   };
 
   var LS_STATE = 'wt_consent_state';   // {v, ts, analytics, marketing, id}
@@ -73,30 +72,20 @@
     return (Date.now() - st.ts) / 86400000 > CONFIG.maxAgeDays;
   }
 
-  var metaLoaded = false;
-  function loadMeta() {
-    if (metaLoaded || !CONFIG.metaPixelId) return; metaLoaded = true;
-    /* eslint-disable */
-    !function (f, b, e, v, n, t, s) {
-      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
-      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
-      t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
-    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-    /* eslint-enable */
-    window.fbq('init', CONFIG.metaPixelId);
-    window.fbq('track', 'PageView');
-  }
-
   function applyConsent(st) {
-    // Aggiorna il Google Consent Mode: GTM/GA4 reagiscono di conseguenza.
+    // 1) Google Consent Mode: i tag Google in GTM (GA4) si autoregolano.
     gtag('consent', 'update', {
       analytics_storage: st.analytics ? 'granted' : 'denied',
       ad_storage: st.marketing ? 'granted' : 'denied',
       ad_user_data: st.marketing ? 'granted' : 'denied',
       ad_personalization: st.marketing ? 'granted' : 'denied'
     });
-    // Meta Pixel: caricato direttamente solo con consenso marketing.
-    if (st.marketing) loadMeta();
+    // 2) Evento per gli attivatori GTM dei tag non-Google (es. Meta Pixel).
+    window.dataLayer.push({
+      event: 'wt_consent_update',
+      consent_analytics: !!st.analytics,
+      consent_marketing: !!st.marketing
+    });
   }
 
   function postConsent(st, choice) {

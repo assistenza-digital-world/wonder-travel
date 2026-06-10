@@ -17,7 +17,7 @@
 $TO          = 'info@wondertravel.it';            // destinatario delle notifiche lead
 $FROM        = 'info@wondertravel.it';            // mittente fallback mail(): stessa casella autenticata (coerenza SPF/DMARC)
 $SUBJECT_TAG = 'Nuovo lead pellegrinaggi';        // prefisso oggetto email
-$ALLOWED_ORIGIN = 'https://wondertravel.it';      // origine consentita (il form è sullo stesso dominio). '*' = qualsiasi.
+$ALLOWED_ORIGIN = 'https://wondertravel-tour.com'; // origine consentita (il form è sullo stesso dominio). '*' = qualsiasi.
 $LOG_FILE    = __DIR__ . '/leads.log';            // backup su file (JSON per riga). Metti '' per disattivare.
 
 // Credenziali sensibili: priorità alla variabile d'ambiente WT_SMTP_PASS,

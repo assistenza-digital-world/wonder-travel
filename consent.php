@@ -11,7 +11,7 @@
  * Endpoint usato dal front-end via VITE_CONSENT_API_URL=/consent.php
  */
 
-$ALLOWED_ORIGIN = 'https://wondertravel.it'; // origine consentita (stesso dominio del banner). '*' = qualsiasi.
+$ALLOWED_ORIGIN = 'https://wondertravel-tour.com'; // origine consentita (stesso dominio del banner). '*' = qualsiasi.
 
 header('Access-Control-Allow-Origin: ' . $ALLOWED_ORIGIN);
 header('Access-Control-Allow-Methods: POST, OPTIONS');

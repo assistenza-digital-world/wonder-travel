@@ -5,4 +5,4 @@ Allow: /
 Disallow: /lead.php
 Disallow: /consent.php
 
-Sitemap: https://wondertravel.it/sitemap.xml
+Sitemap: https://wondertravel-tour.com/sitemap.xml
