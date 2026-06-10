@@ -23,9 +23,12 @@
   var LS_LEGACY = 'wt_cookie_consent'; // 'accepted' | 'rejected' (compat banner precedente)
   var LS_ID = 'wt_consent_id';
 
-  var lang = ((document.documentElement.lang || '').toLowerCase().indexOf('pt') === 0 ||
-              location.pathname.indexOf('/pt-br') === 0) ? 'pt' : 'it';
-  var base = location.pathname.indexOf('/pt-br') === 0 ? '/pt-br' : '/it';
+  var lang =
+    (document.documentElement.lang || "").toLowerCase().indexOf("pt") === 0 ||
+    location.pathname.indexOf("/br") === 0
+      ? "pt"
+      : "it";
+  var base = location.pathname.indexOf("/br") === 0 ? "/br" : "/it";
 
   var STR = {
     it: {

@@ -125,7 +125,7 @@ $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
 $submittedAt = field($data, 'submittedAt');
 
 // ------------------------- EMAIL -------------------------
-$lang = ($locale === 'pt') ? 'PT-BR' : 'IT';
+$lang = ($locale === 'pt') ? 'BR' : 'IT';
 
 $lines = [];
 $lines[] = "Nuova richiesta dal sito Wonder Travel ($lang)";

@@ -7,16 +7,16 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/pt-br"/>
+    <xhtml:link rel="alternate" hreflang="br" href="https://wondertravel-tour.com/br"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://wondertravel-tour.com/"/>
   </url>
   <url>
-    <loc>https://wondertravel-tour.com/pt-br</loc>
+    <loc>https://wondertravel-tour.com/br</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/pt-br"/>
+    <xhtml:link rel="alternate" hreflang="br" href="https://wondertravel-tour.com/br"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://wondertravel-tour.com/"/>
   </url>
   <url>
@@ -25,15 +25,15 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it/privacy"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/pt-br/privacy"/>
+    <xhtml:link rel="alternate" hreflang="br" href="https://wondertravel-tour.com/br/privacy"/>
   </url>
   <url>
-    <loc>https://wondertravel-tour.com/pt-br/privacy</loc>
+    <loc>https://wondertravel-tour.com/br/privacy</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it/privacy"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/pt-br/privacy"/>
+    <xhtml:link rel="alternate" hreflang="br" href="https://wondertravel-tour.com/br/privacy"/>
   </url>
   <url>
     <loc>https://wondertravel-tour.com/it/cookie</loc>
@@ -41,14 +41,14 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it/cookie"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/pt-br/cookie"/>
+    <xhtml:link rel="alternate" hreflang="br" href="https://wondertravel-tour.com/br/cookie"/>
   </url>
   <url>
-    <loc>https://wondertravel-tour.com/pt-br/cookie</loc>
+    <loc>https://wondertravel-tour.com/br/cookie</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it/cookie"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/pt-br/cookie"/>
+    <xhtml:link rel="alternate" hreflang="br" href="https://wondertravel-tour.com/br/cookie"/>
   </url>
 </urlset>
