@@ -13,6 +13,16 @@
   RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+  # Canonicalizza www -> apex (un solo host, coerente con i canonical)
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # Trailing slash sulle directory con redirect HTTPS diretto (evita il
+  # passaggio per http:// del redirect automatico di mod_dir dietro proxy)
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.*)$ https://wondertravel-tour.com/$1/ [L,R=301]
+
   # File o cartelle reali (asset, immagini, lead.php) -> serviti direttamente
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
