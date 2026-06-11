@@ -1,54 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wondertravel-tour.com/it</loc>
-    <lastmod>2026-06-09</lastmod>
+    <loc>https://wondertravel-tour.com/</loc>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/br"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://wondertravel-tour.com/"/>
   </url>
   <url>
-    <loc>https://wondertravel-tour.com/br</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/br"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://wondertravel-tour.com/"/>
-  </url>
-  <url>
-    <loc>https://wondertravel-tour.com/it/privacy</loc>
-    <lastmod>2026-06-09</lastmod>
+    <loc>https://wondertravel-tour.com/privacy</loc>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it/privacy"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/br/privacy"/>
   </url>
   <url>
-    <loc>https://wondertravel-tour.com/br/privacy</loc>
-    <lastmod>2026-06-09</lastmod>
+    <loc>https://wondertravel-tour.com/cookie</loc>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it/privacy"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/br/privacy"/>
-  </url>
-  <url>
-    <loc>https://wondertravel-tour.com/it/cookie</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it/cookie"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/br/cookie"/>
-  </url>
-  <url>
-    <loc>https://wondertravel-tour.com/br/cookie</loc>
-    <lastmod>2026-06-09</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-    <xhtml:link rel="alternate" hreflang="it" href="https://wondertravel-tour.com/it/cookie"/>
-    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://wondertravel-tour.com/br/cookie"/>
   </url>
 </urlset>

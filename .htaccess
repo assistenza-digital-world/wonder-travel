@@ -17,6 +17,12 @@
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
+  # Sito mono-lingua (portoghese) alla root. I vecchi percorsi /it e /br
+  # (e relative sottopagine) reindirizzano in modo permanente all'equivalente
+  # alla radice: /br -> /, /br/privacy -> /privacy, /it/cookie -> /cookie, ecc.
+  RewriteRule ^(?:it|br)/(.*)$ /$1 [R=301,L]
+  RewriteRule ^(?:it|br)/?$ / [R=301,L]
+
   # Trailing slash sulle directory con redirect HTTPS diretto (evita il
   # passaggio per http:// del redirect automatico di mod_dir dietro proxy)
   RewriteCond %{REQUEST_FILENAME} -d
