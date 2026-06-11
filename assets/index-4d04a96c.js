@@ -7268,7 +7268,7 @@ Error generating stack: `+s.message+`
    },
    QT = {
      meta: {
-       lang: "br",
+       lang: "pt-BR",
        title: "Wonder Travel | Peregrinações a Roma e Assis",
        description:
          "Organize a peregrinação do seu grupo a Roma e Assis: Vaticano, Audiência Papal, Basílica de São Francisco e experiências autênticas. Resposta em até 24h.",
@@ -7777,7 +7777,7 @@ Error generating stack: `+s.message+`
      privacyVersion: "2026-06-09",
      cookiePolicyVersion: "2026-06-09",
    },
-   XT = { it: "it-IT", pt: "br" };
+   XT = { it: "it-IT", pt: "pt-BR" };
  function ZT(e, t = "it-IT") {
    try {
      return new Intl.NumberFormat(t).format(e);
